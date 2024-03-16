@@ -27,10 +27,36 @@ for (const tab of tabList) {
 
     elements.add(element);
 }
-// document.querySelector('ul').append(...elements);
+document.querySelector('ul').append(...elements);
 console.log(document.querySelector('ul'));
 
 const saveUrlsBtn = document.getElementById('save-urls');
 const reloadUrlsBtn = document.getElementById('reload-urls');
 
+// console.log(`saveUrlsBtn: ${saveUrlsBtn}`);
+// console.log(`reloadUrlsBtn: ${reloadUrlsBtn}`);
+// console.log('template ', template);
+// console.log('tabsList ', tabList);
+// console.log('window ', window);
 
+saveUrlsBtn.addEventListener('click', async () => {
+    const newHandle = await window.showSaveFilePicker();
+    const writableStream = await newHandle.createWritable();
+    let message = '';
+    tabList.forEach((tab) => {
+        message += tab.url + '\n';
+    });
+    await writableStream.write(message);
+    await writableStream.close();
+});
+
+reloadUrlsBtn.addEventListener('click', async () => {
+    // const result = await fetch('./url_list.txt');
+    // const urlsText = await result.text();
+    const urlsText = await (await fetch('./url_list.txt')).text();
+    const urls = urlsText.split('\n');
+
+    // console.log('result: ', result);
+    // console.log('urlsText: ', urlsText);
+    // console.log('urls: ', urls);
+});
