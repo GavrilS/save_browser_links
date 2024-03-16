@@ -59,4 +59,24 @@ reloadUrlsBtn.addEventListener('click', async () => {
     // console.log('result: ', result);
     // console.log('urlsText: ', urlsText);
     // console.log('urls: ', urls);
+
+    if (urls.length > 0) {
+        chrome.windows.create(
+            {
+                'focused': true,
+                'state': 'maximized',
+                'type': 'normal',
+                'url': urls
+            }
+        );
+        // urls.forEach((url) => {
+        //     if (url !== '') {
+        //         chrome.tabs.create(
+        //             {
+        //                 "url": url
+        //             }
+        //         );
+        //     } 
+        // });
+    }
 });
